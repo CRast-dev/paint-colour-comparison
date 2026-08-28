@@ -12,8 +12,11 @@ def main():
 
     rgb_euclidian_distance = calculate_rgb_euclidian_dist(colour1,colour2)
     hsv_euclidian_distance = calculate_hsv_dist(colour1, colour2)
+    cie76_distance = calculate_cie76_distance(colour1, colour2)
     print("Euclidian distance: ", rgb_euclidian_distance)
     print("HSV euclidian distance: ", hsv_euclidian_distance)
+    print(f"Lab: {colour1.lab}")
+    print("CIE76 distance: ", cie76_distance) 
 
 def calculate_rgb_euclidian_dist(colour1, colour2):
     r_component = (colour1.rgb[0] - colour2.rgb[0])**2
@@ -37,6 +40,15 @@ def calculate_hsv_dist(colour1, colour2):
     z2_component = v2
 
     return math.sqrt((x1_component-x2_component)**2 + (y1_component - y2_component)**2 + (z1_component - z2_component)**2)
+
+
+
+def calculate_cie76_distance(colour1, colour2):
+    l_component = colour1.lab[0] - colour2.lab[0]
+    a_component = colour1.lab[1] - colour2.lab[1]
+    b_component = colour1.lab[2] - colour2.lab[2]
+
+    return math.sqrt(l_component **2 + a_component **2 + b_component **2)
 
 if __name__ == "__main__":
     main()
