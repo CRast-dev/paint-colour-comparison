@@ -1,3 +1,9 @@
+from src.similarity import get_similarity_level
+from src.similarity import RGB_THRESHOLDS
+from src.similarity import HSV_THRESHOLDS
+from src.similarity import CIE76_THRESHOLDS
+from src.similarity import CIEDE2000_THRESHOLDS
+
 import streamlit as st
 from src.colour import Colour
 
@@ -39,15 +45,102 @@ hsv_distance = calculate_hsv_dist(colour1,colour2)
 cie76_distance = calculate_cie76_distance(colour1,colour2)
 ciede2000_distance = calculate_ciede2000_distance(colour1,colour2)
 
-result1, result2, result3, result4 = st.columns(4)
-with result1:
-    st.metric("RGB Euclidean",f"{rgb_distance:.4f}")
+rgb_level, rgb_color = get_similarity_level(rgb_distance, RGB_THRESHOLDS)
+hsv_level, hsv_color = get_similarity_level(hsv_distance, HSV_THRESHOLDS)
+cie76_level, cie76_color = get_similarity_level(cie76_distance, CIE76_THRESHOLDS)
+ciede2000_level, ciede2000_color = get_similarity_level(ciede2000_distance, CIEDE2000_THRESHOLDS)
 
-with result2:
-    st.metric("HSV",f"{hsv_distance:.4f}")
 
-with result3:
-    st.metric("CIE76",f"{cie76_distance:.4f}")
+st.markdown(
+    f"""
+    <div style="
+        text-align: center;
+        color: {rgb_color};
+    ">
+        <span style="
+            font-size: 24px;
+            font-weight: bold;
+        ">
+            {rgb_distance:.4f}
+        </span>
+        <br>
+        <span style="
+            font-size: 16px;
+            color: inherit;
+        ">
+            {rgb_level}
+        </span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown(
+    f"""
+    <div style="
+        text-align: center;
+        color: {hsv_color};
+    ">
+        <span style="
+            font-size: 24px;
+            font-weight: bold;
+        ">
+            {hsv_distance:.4f}
+        </span>
+        <br>
+        <span style="
+            font-size: 16px;
+            color: inherit;
+        ">
+            {hsv_level}
+        </span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-with result4:
-    st.metric("CIEDE2000",f"{ciede2000_distance:.4f}")
+st.markdown(
+    f"""
+    <div style="
+        text-align: center;
+        color: {cie76_color};
+    ">
+        <span style="
+            font-size: 24px;
+            font-weight: bold;
+        ">
+            {cie76_distance:.4f}
+        </span>
+        <br>
+        <span style="
+            font-size: 16px;
+            color: inherit;
+        ">
+            {cie76_level}
+        </span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown(
+    f"""
+    <div style="
+        text-align: center;
+        color: {ciede2000_color};
+    ">
+        <span style="
+            font-size: 24px;
+            font-weight: bold;
+        ">
+            {ciede2000_distance:.4f}
+        </span>
+        <br>
+        <span style="
+            font-size: 16px;
+            color: inherit;
+        ">
+            {ciede2000_level}
+        </span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
