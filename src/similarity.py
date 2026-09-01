@@ -8,11 +8,11 @@ CIEDE2000_THRESHOLDS = [2, 5, 10, 20]
 
 def get_similarity_level(distance, thresholds):
     if distance <= thresholds[0]:
-        return "Very close", "green"
+        return "Very good match", "green"
     if distance <= thresholds[1]:
         return "Good match", "limegreen"
     if distance <= thresholds[2]:
         return "Moderate match", "gold"
     if distance <= thresholds[3]:
-        return "Poor match", "orange"
-    return "Awful match", "red"
+        return "Bad match", "orange"
+    return "Very Bad match", "red"
