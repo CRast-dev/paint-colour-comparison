@@ -39,9 +39,13 @@ uploaded_image = st.file_uploader(
     type=["png", "jpg", "jpeg"]
 )
 if uploaded_image is not None:
-    image = Image.open(uploaded_image)
+    image = Image.open(uploaded_image).convert("RGB")
     coordinates = streamlit_image_coordinates(image)
-    st.write(coordinates)
+    x_coord = coordinates["x"]
+    y_coord = coordinates["y"]
+    pixel = image.getpixel((x_coord, y_coord))
+    hex_code_pixel = Colour.getHexFromRGB(pixel[0],pixel[1],pixel[2])
+    st.write(f"Pixel Hexcode: {hex_code_pixel}")
 
 colour1_input = st.color_picker(
     "Choose the colour",

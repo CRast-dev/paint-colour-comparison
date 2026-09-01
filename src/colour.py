@@ -38,3 +38,7 @@ class Colour:
         lab = colour.XYZ_to_Lab(xyz,illuminant=sRGB_space.whitepoint)
         return (float(lab[0]), float(lab[1]), float(lab[2])
     )
+
+    def getHexFromRGB(r,g,b):
+        hex_code = "#{:02X}{:02X}{:02X}".format(r,g,b)
+        return hex_code
