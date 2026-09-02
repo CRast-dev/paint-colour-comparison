@@ -57,14 +57,32 @@ else:
     )
     if uploaded_image is not None:
         image = Image.open(uploaded_image).convert("RGB")
-        coordinates = streamlit_image_coordinates(image)
+        coordinates = streamlit_image_coordinates(image, width= 600)
         if coordinates is not None:
             x_coord = coordinates["x"]
             y_coord = coordinates["y"]
             pixel = image.getpixel((x_coord, y_coord))
             hex_code_pixel = Colour.getHexFromRGB(pixel[0],pixel[1],pixel[2])
             colour2 = Colour(hex_code_pixel)
-            st.write(f"Pixel Hexcode: {hex_code_pixel}")
+            st.markdown(
+            f"""
+            <div style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            ">
+                <div style="
+                    width: 40px;
+                    height: 40px;
+                    background-color: {hex_code_pixel};
+                    border: 1px solid #888;
+                    border-radius: 4px;
+                "></div>
+                <code>{hex_code_pixel}</code>
+            </div>
+            """,
+            unsafe_allow_html=True
+            )
 
 
 if colour2 is not None:
