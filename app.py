@@ -3,6 +3,7 @@ from src.similarity import RGB_THRESHOLDS
 from src.similarity import HSV_THRESHOLDS
 from src.similarity import CIE76_THRESHOLDS
 from src.similarity import CIEDE2000_THRESHOLDS
+from src.image_coordinates import get_original_pixel
 
 import streamlit as st
 from PIL import Image
@@ -57,11 +58,11 @@ else:
     )
     if uploaded_image is not None:
         image = Image.open(uploaded_image).convert("RGB")
-        coordinates = streamlit_image_coordinates(image, width= 600)
+        display_width = 800
+
+        coordinates = streamlit_image_coordinates(image, width= display_width)
         if coordinates is not None:
-            x_coord = coordinates["x"]
-            y_coord = coordinates["y"]
-            pixel = image.getpixel((x_coord, y_coord))
+            pixel = get_original_pixel(image,coordinates,display_width)
             hex_code_pixel = Colour.getHexFromRGB(pixel[0],pixel[1],pixel[2])
             colour2 = Colour(hex_code_pixel)
             st.markdown(
