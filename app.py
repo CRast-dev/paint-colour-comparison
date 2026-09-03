@@ -58,7 +58,7 @@ else:
     )
     if uploaded_image is not None:
         image = Image.open(uploaded_image).convert("RGB")
-        display_width = 800
+        display_width = 400
 
         coordinates = streamlit_image_coordinates(image, width= display_width)
         if coordinates is not None:
